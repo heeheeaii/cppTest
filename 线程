@@ -1,0 +1,192 @@
+C++ 向线程传递参数有以下几种方式：
+
+- 使用 std::thread::thread(function, args...)，其中 function 是要执行的函数，args... 是函数的参数。
+- 使用 std::async(function, args...)，其中 function 是要执行的函数，args... 是函数的参数。
+- 使用 std::packaged_task<R(Args...)>，其中 R 是函数的返回类型，Args... 是函数的参数类型。然后使用 std::future<R> 对象来获取函数的返回值。
+- 使用 std::shared_ptr<T> 对象来共享数据，然后在线程中修改共享的数据。
+
+以下是一个使用第一种方式向线程传递参数的示例代码：
+```c++
+#include <iostream>
+#include <thread>
+#include <vector>
+
+using namespace std;
+
+void PrintSum(int a, int b, std::vector<int> *vec)
+{
+    int sum = a + b;
+    vec->push_back(sum);
+    cout << "Sum: " << sum << endl;
+}
+
+int main()
+{
+    std::vector<int> vec;
+    std::thread t1(PrintSum, 10, 20, &vec);
+    std::thread t2(PrintSum, 30, 40, &vec);
+    t1.join();
+    t2.join();
+
+    for (auto it = vec.begin(); it!= vec.end(); it++)
+    {
+        cout << *it << endl;
+    }
+
+    return 0;
+}
+```
+以下是一些C++线程使用的示例代码：
+ 1. 创建线程：
+#include <thread>
+void doSomething() {
+    // 线程要执行的代码
+}
+int main() {
+    std::thread t(doSomething);
+    t.join();
+    return 0;
+}
+
+ 2. 传递参数给线程：
+#include <thread>
+void doSomething(int x, double y) {
+    // 线程要执行的代码
+}
+int main() {
+    std::thread t(doSomething, 3, 4.5);
+    t.join();
+    return 0;
+}
+
+ 3. 使用lambda表达式创建线程：
+#include <thread>
+#include <iostream>
+int main() {
+    std::thread t([](int x, double y){
+        // 线程要执行的代码
+        std::cout << "x: " << x << ", y: " << y << std::endl;
+    }, 3, 4.5);
+    t.join();
+    return 0;
+}
+
+ 4. 使用std::async创建线程：
+#include <future>
+#include <iostream>
+int doSomething(int x, double y) {
+    // 线程要执行的代码
+    return x + y;
+}
+int main() {
+    std::future<int> f = std::async(doSomething, 3, 4.5);
+    int result = f.get();
+    std::cout << "Result: " << result << std::endl;
+    return 0;
+}
+
+ 5. 使用std::promise和std::future进行线程间通信：
+#include <future>
+#include <iostream>
+int main() {
+    std::promise<int> p;
+    std::future<int> f = p.get_future();
+    std::thread t([](std::promise<int> p){
+        // 线程要执行的代码
+        p.set_value(3);
+    }, std::move(p));
+    int result = f.get();
+    std::cout << "Result: " << result << std::endl;
+    t.join();
+    return 0;
+}
+
+以上代码都是简单的线程创建和使用示例，实际使用时可能需要考虑更多的因素，比如线程同步、线程安全等问题。
+以下是使用 std::async(function, args...)，其中 function 是要执行的函数，args... 是函数的参数的代码示例：
+
+```c++
+#include <iostream>
+#include <future>
+#include <thread>
+
+void print_numbers(int start, int end) {
+  for (int i = start; i < end; i++) {
+    std::cout << i << std::endl;
+  }
+}
+
+int main() {
+  int num_threads = 4;
+  int start = 0;
+  int end = 10;
+
+  std::vector<std::future<void>> futures;
+
+  for (int i = 0; i < num_threads; i++) {
+    int thread_id = i;
+    int thread_start = start + (end - start) / num_threads * thread_id;
+    int thread_end = start + (end - start) / num_threads * (thread_id + 1);
+
+    std::future<void> future = std::async(std::launch::async, print_numbers, thread_start, thread_end);
+    futures.push_back(future);
+  }
+
+  for (auto& future : futures) {
+    future.get();
+  }
+
+  return 0;
+}
+```
+
+以下是使用 std::packaged_task，其中 R 是函数的返回类型，Args... 是函数的参数类型，以及使用 std::future 对象来获取函数的返回值的代码示例：
+
+```c++
+#include <iostream>
+#include <future>
+#include <thread>
+
+int sum(int a, int b) {
+  return a + b;
+}
+
+int main() {
+  int a = 5;
+  int b = 10;
+
+  std::packaged_task<int(int, int)> task(sum);
+  std::future<int> result = task.get_future();
+
+  std::thread thread([&task, a, b]() {
+    task(a, b);
+  });
+
+  thread.join();
+
+  std::cout << "Result: " << result.get() << std::endl;
+
+  return 0;
+}
+```
+
+以下是使用 std::shared_ptr 对象来共享数据，然后在线程中修改共享的数据的代码示例：
+
+```c++
+#include <iostream>
+#include <memory>
+#include <thread>
+
+int main() {
+  std::shared_ptr<int> shared_number = std::make_shared<int>(5);
+
+  std::thread thread([&shared_number]() {
+    *shared_number = 10;
+  });
+
+  thread.join();
+
+  std::cout << "Shared number: " << *shared_number << std::endl;
+
+  return 0;
+}
+```
