@@ -1,0 +1,31 @@
+std::thread t(find, std::ref(events), std::ref(traits), std::ref(minListLength), std::ref(rst), newThread);
+No matching constructor for initialization of 'std::thread' candidate template ignored: couldn't infer template argument '_Callable' candidate constructor not viable: requires 1 argument, but 6 were provided
+这个错误是由于std::thread的构造函数不能接受多个参数。在你的代码中，你试图传递6个参数给std::thread的构造函数，但是这个构造函数只接受一个参数。
+为了解决这个问题，你可以将函数和参数打包在一个lambda表达式中，然后将这个lambda表达式传递给std::thread的构造函数。以下是一个示例：
+#include <iostream>
+#include <thread>
+#include <vector>
+#include <atomic>
+#include <limits>
+void newThread(std::atomic_bool &ctl, void (*func)(int)) {}
+void find(const std::vector<int> &all, const std::vector<int> &seq, std::atomic_int &minLen, std::vector<std::vector<int>> &out,
+          void (*func)(std::atomic_bool &, void (*)(int))) {}
+bool comp(const std::vector<int> &a, const std::vector<int> &b) {
+    return a.size() < b.size();
+}
+class Solution {
+public:
+    std::vector<int> MatchLogTrait(const std::vector<int> &events, const std::vector<int> &traits) {
+        std::vector<std::vector<int>> rst;
+        std::atomic_bool ctl(true);
+        std::atomic_int minListLength(std::numeric_limits<int>::max());
+        std::thread t([&]() {
+            find(events, traits, minListLength, rst, newThread);
+        });
+        t.join();
+        std::sort(rst.begin(), rst.end(), comp);
+        return rst[0];
+    }
+};
+
+在这个示例中，我们创建了一个lambda表达式，它接受一个空参数列表，并调用find函数。然后，我们将这个lambda表达式传递给std::thread的构造函数。这样，我们就可以在新线程中调用find函数，并传递所需的参数。
