@@ -26,3 +26,36 @@ std::cout << *it << std::endl;  // 输出1
 
 在这个例子中，*it用于获取迭代器it所指向的元素。
 在我们的示例中，it是一个std::sregex_iterator，它是一种迭代器，用于遍历正则表达式匹配的结果。当我们使用*运算符来解引用it时，我们实际上是获取了迭代器所指向的std::match_results<>对象。
+
+在C++中，你可以通过定义一个类来自定义迭代器。以下是一个简单的示例，演示如何定义一个自定义迭代器：
+#include <iostream>
+class MyIterator {
+private:
+    int *ptr;
+public:
+    MyIterator(int *p) : ptr(p) {}
+    int operator*() {
+        return *ptr;
+    }
+    MyIterator& operator++() {
+        ++ptr;
+        return *this;
+    }
+    bool operator!=(const MyIterator& other) {
+        return ptr != other.ptr;
+    }
+};
+int main() {
+    int arr[] = {1, 2, 3, 4, 5};
+    for (MyIterator it = MyIterator(arr); it != MyIterator(arr + 5); ++it) {
+        std::cout << *it << std::endl;
+    }
+    return 0;
+}
+
+在这个示例中，我们定义了一个名为MyIterator的类，它包含一个指向整数的指针。我们为这个类定义了以下操作符：
+ * operator*()：返回指针所指向的值。
+ * operator++()：将指针向前移动一个位置，并返回自身的引用。
+ * operator!=()：比较两个MyIterator对象是否指向不同的位置。
+然后，我们在main函数中使用MyIterator来遍历一个整数数组，并输出每个元素的值。
+你可以根据需要修改MyIterator的实现，以适应不同的迭代需求。
