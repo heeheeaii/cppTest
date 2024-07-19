@@ -1,0 +1,24 @@
+#include <iostream>
+using namespace std;
+
+// 定义一个函数，接受一个整数并返回一个整数
+int addOne(int x) {
+    return x + 1;
+}
+
+// 定义一个函数，接受一个函数指针和一个整数，然后调用该函数
+int applyFunction(int (*function)(int), int x) {
+    return function(x);
+}
+
+int main() {
+    // 创建一个指向函数的函数指针
+    int (*functionPointer)(int) = addOne;
+
+    // 使用函数指针调用函数
+    int result = applyFunction(functionPointer, 5);
+
+    cout << "Result: " << result << endl;
+
+    return 0;
+}
