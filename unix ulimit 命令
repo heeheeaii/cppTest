@@ -1,0 +1,5 @@
+ulimit是一个Unix和Linux系统中的命令，用于设置用户的系统资源限制。ulimit -c用于设置core文件的大小限制。
+ulimit -c unlimited命令用于设置core文件的大小为无限制，这意味着当程序崩溃时，它将生成一个完整的core文件。
+ulimit -c 0命令用于禁止生成core文件，即使程序崩溃，也不会生成core文件。
+因此，如果你想在程序崩溃时生成core文件，以便进行调试，你应该使用ulimit -c unlimited。如果你不想生成core文件，或者你的系统没有足够的空间来存储core文件，你应该使用ulimit -c 0。
+set –c unlimited和set –c 0都不是有效的命令，因为set命令通常用于设置环境变量，而不是系统资源限制。如果你想在shell脚本中设置core文件的大小限制，你应该使用ulimit -c命令。
