@@ -1,0 +1,46 @@
+std::make_shared和std::make_unique都可以用于创建智能指针，但它们的使用场景和所有权模型不同。
+std::make_shared通常用于创建共享所有权的对象。当你有一个对象，并且希望多个智能指针可以共享对象的所有权时，你可以使用std::make_shared。这样，当最后一个智能指针被销毁时，对象也会被销毁。
+以下是一个使用std::make_shared创建共享所有权对象的示例：
+#include <memory>
+#include <iostream>
+class MyClass {
+public:
+    MyClass(int value) : value_(value) {
+        std::cout << "MyClass constructed with value " << value_ << std::endl;
+    }
+    ~MyClass() {
+        std::cout << "MyClass destructed with value " << value_ << std::endl;
+    }
+private:
+    int value_;
+};
+int main() {
+    std::shared_ptr<MyClass> ptr1 = std::make_shared<MyClass>(10);
+    std::shared_ptr<MyClass> ptr2 = ptr1;
+    // 使用ptr1和ptr2...
+    return 0;
+}
+
+在这个例子中，我们创建了一个MyClass对象，并使用std::make_shared创建了两个共享所有权的智能指针ptr1和ptr2。当最后一个智能指针被销毁时，MyClass对象也会被销毁。
+相比之下，std::make_unique用于创建具有独占所有权的对象。当你有一个对象，并且希望只有一个智能指针可以拥有对象的所有权时，你可以使用std::make_unique。这样，当最后一个智能指针被销毁时，对象也会被销毁。
+以下是一个使用std::make_unique创建独占所有权对象的示例：
+#include <memory>
+#include <iostream>
+class MyClass {
+public:
+    MyClass(int value) : value_(value) {
+        std::cout << "MyClass constructed with value " << value_ << std::endl;
+    }
+    ~MyClass() {
+        std::cout << "MyClass destructed with value " << value_ << std::endl;
+    }
+private:
+    int value_;
+};
+int main() {
+    std::unique_ptr<MyClass> ptr1 = std::make_unique<MyClass>(10);
+    // 使用ptr1...
+    return 0;
+}
+
+在这个例子中，我们创建了一个MyClass对象，并使用std::make_unique创建了一个独占所有权的智能指针ptr1。当ptr1被销毁时，MyClass对象也会被销毁。
