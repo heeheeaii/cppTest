@@ -1,0 +1,17 @@
+Perf stat是Linux系统中的一个命令，用于收集硬件性能计数器的统计信息。它可以用来分析程序的性能，找出性能瓶颈，并找出可以优化的地方。
+使用perf stat命令的基本语法如下：
+perf stat [options] command [args]
+
+其中，command [args]是你想要分析的程序和它的参数，options是perf stat的选项。
+例如，如果你想要分析一个名为myprogram的程序，你可以使用以下命令：
+perf stat ./myprogram
+
+这个命令会运行myprogram，并在程序结束后显示一些统计信息，包括CPU时钟周期数、缓存命中和缓存亲和度等。
+你还可以使用各种选项来配置perf stat的行为，例如：
+ * -e event：指定要收集的事件。事件可以是硬件性能计数器的名称，例如cycles（CPU时钟周期数）、cache-references（缓存引用）、cache-misses（缓存未命中）等。
+ * -I interval：指定收集统计信息的间隔。
+ * -C CPU：指定要收集的CPU。
+例如，如果你只想要收集CPU时钟周期数和缓存引用的统计信息，并且每隔1000毫秒收集一次统计信息，你可以使用以下命令：
+perf stat -e cycles,cache-references -I 1000 ./myprogram
+
+这个命令会在每隔1000毫秒收集一次CPU时钟周期数和缓存引用的统计信息，然后在程序结束后显示这些统计信息。
