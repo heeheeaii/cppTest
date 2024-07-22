@@ -1,0 +1,29 @@
+
+- **排序算法**
+排序算法包括：`sort()`、 `stable_sort()`、 `partial_sort()`、 `nth_element()`、 `merge()`、 `inplace_merge()`、 `heap_sort()`、 `push_heap()` 和 `pop_heap()`。
+- **搜索算法**
+搜索算法包括：`find()`、 `lower_bound()`、 `upper_bound()`、 `equal_range()` 和 `binary_search()`。
+- **修改算法**
+修改算法包括：`remove()`、 `erase()`、 `unique()`、 `reverse()` 和 `reverse_copy()`。
+- **生成算法**
+生成算法包括：`generate()`、 `fill()`、 `remove_if()`、 `replace()` 和 `replace_if()`。
+- **分区算法**
+分区算法包括：`partition()`、 `stable_partition()` 和 `partition_copy()`。
+- **相等算法**
+相等算法包括：`equal()`、 `mismatch()` 和 `is_permutation()`。
+- **数学算法**
+数学算法包括：`accumulate()`、 `inner_product()`、 `adjacent_difference()` 和 `reduce()`。
+- **集合算法**
+集合算法包括：`set_intersection()`、 `set_union()`、 `set_difference()`、 `set_symmetric_difference()` 和 `includes()`。
+- **迭代器算法**
+迭代器算法包括：`copy()`、 `copy_if()`、 `transform()`、 `replace_copy()`、 `remove_copy()` 和 `reverse_copy()`。
+- **容器算法**
+容器算法包括：`remove_if()`、 `unique()`、 `reverse()` 和 `sort()`。
+- **位运算算法**
+位运算算法包括：`bit_set()`、 `bit_test()`、 `bit_count()`、 `bit_reverse()` 和 `bit_fill()`。
+- **随机算法**
+随机算法包括：`random_shuffle()`、 `sample()`、 `shuffle()` 和 `is_sorted()`。
+- **字符串算法**
+字符串算法包括：`find()`、 `rfind()`、 `find_first_of()`、 `find_last_of()`、 `compare()`、 `replace()`、 `substr()`、 `to_lower()`、 `to_upper()`、 `to_string()` 和 `to_wstring()`。
+- **I/O算法**
+I/O算法包括：`istream_iterator` 和 `ostream_iterator`。
