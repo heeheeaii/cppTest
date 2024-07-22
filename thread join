@@ -1,0 +1,33 @@
+
+#include <iostream>
+#include <tuple>
+#include <bitset>
+#include <vector>
+#include <map>
+
+using namespace std;
+
+#include <iostream>
+#include <future>
+#include <string>
+
+int main() {
+    std::promise<std::string> promise;
+    std::future<std::string> future = promise.get_future();
+
+    std::thread t([&promise] {
+        std::string s = "hello";
+        std::this_thread::sleep_for(std::chrono::seconds(1));
+        promise.set_value(s);
+    });
+    std::thread t2([] {
+        std::string s = "hello2";
+        std::cout << s << std::endl;
+    });
+    t.join();
+    t2.join();
+
+
+    std::string value = future.get();
+    std::cout << value << std::endl;
+}
