@@ -1,6 +1,4 @@
-//
-// Created by wWX1349763 on 2024/7/19.
-//
+
 #include <mutex>
 #include <condition_variable>
 #include <thread>
