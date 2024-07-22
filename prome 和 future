@@ -1,0 +1,32 @@
+`std::promise` 和 `std::future` 是C++11中提供的用于线程间通信的类模板。它们提供了一种机制，可以在一个线程生成一个值，并将其提供给另一个线程。
+
+`std::promise` 类用于生成一个值，而 `std::future` 类用于获取该值。`std::future` 对象代表一个未来值，它可以被等待，直到它的值可用。
+
+以下是一个使用 `std::promise` 和 `std::future` 的示例代码：
+
+```c++
+#include <iostream>
+#include <future>
+#include <string>
+
+int main() {
+  std::promise<std::string> promise;
+  std::future<std::string> future = promise.get_future();
+
+  std::thread t([&promise] {
+    std::string s = "hello";
+    promise.set_value(s);
+  });
+
+  t.join();
+
+  std::string value = future.get();
+  std::cout << value << std::endl;
+}
+```
+
+在这个示例中，我们首先定义了一个 `std::promise` 对象 `promise`，它用于生成一个值。然后，我们创建一个 `std::future` 对象 `future`，它将等待 `promise` 生成一个值。
+
+我们将一个线程启动，该线程使用 `std::promise` 的 `set_value` 函数设置一个值。然后，主线程等待 `std::future` 对象 `future` 获得值。
+
+最后，我们获取 `std::future` 对象的值，并将其打印出来。
