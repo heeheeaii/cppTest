@@ -1,0 +1,67 @@
+#include <iostream>
+
+#include <vector>
+#include <list>
+
+#include <deque>
+#include <queue>
+
+#include <stack>
+
+#include <set>
+#include <unordered_set>
+
+#include <map>
+#include <unordered_map>
+
+#include <string>
+
+#include <algorithm>
+#include <utility>
+#include <cmath>
+
+int main() {
+    // 1. 创建容器
+    std::vector<int> v1; // 顺序容器
+    std::list<int> l1; // 双向链表
+    std::deque<int> d1; // 双端队列
+    std::stack<int> s1; // 栈
+    std::queue<int> q1; // 队列
+    std::set<int> s2; // 集合
+    std::multiset<int> s3; // 多重集合
+    std::map<std::string, int> m1; // 关联容器
+    std::multimap<std::string, int> m2; // 多重关联容器
+    std::unordered_set<int> us1; // 哈希集合
+    std::unordered_multiset<int> um1; // 哈希多重集合
+    std::unordered_map<std::string, int> um2; // 哈希关联容器
+    std::unordered_multimap<std::string, int> um3; // 哈希多重关联容器
+
+    // 2. 添加元素
+    v1.push_back(1);
+    l1.push_front(2);
+    d1.push_back(3);
+    s1.push(4);
+    q1.push(5);
+    s2.insert(6);
+    s3.insert(7);
+    m1.insert(std::make_pair("hello", 8));
+    m2.insert(std::make_pair("world", 9));
+    m2.insert(std::make_pair("world", 13));
+    m2.insert(std::make_pair("world", 12));
+    m2.insert(std::make_pair("world", 11));
+    m2.insert(std::make_pair("world", 10));
+    us1.insert(10);
+    um1.insert(11);
+    um2.insert(std::make_pair("c++", 12));
+    um3.insert(std::make_pair("stl", 13));
+
+    s3.insert(4);
+    s3.insert(4);
+    s3.insert(4);
+
+    auto rst = m2.find("world");
+    for (; rst != m2.end(); rst++) {
+        std::cout << rst->second << std::endl;
+    }
+    return 0;
+}
