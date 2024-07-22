@@ -1,0 +1,20 @@
+以下是一个使用C++获取类型（type）的代码示例：
+
+```c++
+#include <iostream>
+#include <typeinfo>
+
+int main() {
+    int x = 5;
+    std::cout << typeid(x).name() << std::endl;
+    return 0;
+}
+```
+
+这个程序使用了两个头文件：iostream和typeinfo。
+
+首先，我们定义了一个名为x的整数变量，并将其赋值为5。
+
+然后，我们使用std::cout将类型名称打印到屏幕上。
+
+最后，我们返回0以表示程序的成功执行。
