@@ -1,3 +1,5 @@
+拷贝整个googletest文件夹到项目根目录中
+编写根目录的CmakeLists文件
 // cmake 版本
 cmake_minimum_required(VERSION 3.25)
 // 项目名称
