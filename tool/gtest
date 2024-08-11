@@ -1,0 +1,24 @@
+// cmake 版本
+cmake_minimum_required(VERSION 3.25)
+// 项目名称
+project(leet2)
+ 
+// c++ 版本
+set(CMAKE_CXX_STANDARD 17)
+ 
+// 设置别名
+set(Googletest googletest-1.14.0)
+// 添加子目录
+add_subdirectory(${Googletest})
+// 设置文件路径 这样调用gtest.h 时就不用写很长的路径了
+include_directories(${Googletest}/googletest-1.14.0/googletest/include)
+include_directories(${Googletest}/googletest-1.14.0/googlemock/include)
+ 
+// 添加可执行的文件
+add_executable(leet2 main.cpp gtest_main.cpp gtest_main.cpp)
+// 链接Googletest
+target_link_libraries(leet2 gtest gtest_main)
+// 链接Googlemock
+target_link_libraries(leet2 gmock gmock_main)
+
+# 编写完成后，编译一下cmakelist文件，再待测函数中引入头文件#include"gtest/gtest.h"，即可编写测试样例，不然引入头文件会报错
