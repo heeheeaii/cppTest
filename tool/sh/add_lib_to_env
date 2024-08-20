@@ -1,0 +1,44 @@
+# from contain library to find whether has so lib file ,
+# if has add this absolute path to a env variable
+# eg: source add_lib.sh /home/me/to/lib
+if [ -z "$1" ]; then
+  echo "Usage: $0 <directory>"
+  return 1
+fi
+
+if ! [[ "$1" =~ ^/ ]]; then
+    echo "error: path must be absolute"
+    return 1
+fi
+
+command="echo $LD_LIBRARY_PATH"
+output=$(eval $command)
+
+if [ -n "$output" ]; then
+  echo "error: LD_LIBRARY_PATH has val: $output, (can use unset LD_LIBRARY_PATH to clear)"
+  return 1
+else
+  echo "begin set LD_LIBRARY_PATH"
+fi
+
+ld_library_path=""
+
+search_directory() {
+  local dir=$1
+
+  if ls "$dir"/*.so &> /dev/null; then
+    ld_library_path+="$dir:"
+  fi
+
+  for subdir in "$dir"/*/; do
+    if [ -d "$subdir" ]; then
+      search_directory "$subdir"
+    fi
+  done
+}
+
+search_directory "$1"
+ld_library_path="${ld_library_path//\/\//\/}"
+ld_library_path="${ld_library_path%:}"
+export LD_LIBRARY_PATH="$ld_library_path"
+echo "LD_LIBRARY_PATH set to $LD_LIBRARY_PATH"
